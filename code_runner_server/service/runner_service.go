@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -10,8 +9,8 @@ import (
 var cmd *exec.Cmd
 
 func startRunner() {
-	fmt.Println("FOO:", os.Getenv("SCRIPTS_PATH"))
-	cmd := exec.Command("/bin/sh", "/path/to/file.sh")
+	scriptPath := os.Getenv("SCRIPTS_PATH") + "/start.sh"
+	cmd := exec.Command("/bin/sh", scriptPath)
 	if err := cmd.Start(); err != nil {
 		log.Fatal(err)
 	}
@@ -30,7 +29,8 @@ func restartRunner() {
 }
 
 func installDependencies() {
-	_, err := exec.Command("/bin/sh", "/path/to/file.sh").Output()
+	scriptPath := os.Getenv("SCRIPTS_PATH") + "/install-dependencies.sh"
+	_, err := exec.Command("/bin/sh", scriptPath).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
