@@ -7,21 +7,35 @@ import (
 )
 
 func startProject(c *gin.Context) {
-	service.StartRunner()
+	err := service.StartRunner()
+	if err != nil {
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	c.Writer.WriteHeader(http.StatusOK)
 }
 
 func restartProject(c *gin.Context) {
-	service.RestartRunner()
+	err := service.RestartRunner()
+	if err != nil {
+		return
+	}
 	c.Writer.WriteHeader(http.StatusOK)
 }
 
 func stopProject(c *gin.Context) {
-	service.StopRunner()
+	err := service.StopRunner()
+	if err != nil {
+		return
+	}
 	c.Writer.WriteHeader(http.StatusOK)
 }
 
 func installDependencies(c *gin.Context) {
-	service.InstallDependencies()
+	err := service.InstallDependencies()
+	if err != nil {
+		c.Writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	c.Writer.WriteHeader(http.StatusOK)
 }
