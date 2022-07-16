@@ -1,29 +1,67 @@
 package service
 
 import (
-	"fmt"
+	"errors"
+	"log"
 	"os"
 	"os/exec"
 )
 
-func startProject() {
-	fmt.Println("FOO:", os.Getenv("SCRIPTS_PATH"))
-	_, err := exec.Command("/bin/sh", "/path/to/file.sh").Output()
-	if err != nil {
-		fmt.Printf("error %s", err)
+var cmd *exec.Cmd
+
+func StartRunner() error {
+	if cmd != nil {
+		return errors.New("action already running")
 	}
+	log.Println("Starting runner")
+	scriptPath := os.Getenv("SCRIPTS_PATH") + "/start.sh"
+	cmd = exec.Command("/bin/sh", scriptPath)
+	if err := cmd.Start(); err != nil {
+		return err
+	}
+	return nil
 }
 
-func stopProject() {
-	_, err := exec.Command("/bin/sh", "/path/to/file.sh").Output()
-	if err != nil {
-		fmt.Printf("error %s", err)
+func StopRunner() error {
+	if cmd != nil {
+		log.Println("Stopping process")
+		err := cmd.Process.Kill()
+		cmd = nil
+		if err != nil {
+			log.Print(err)
+			return err
+		}
 	}
+	return nil
 }
 
-func installDependencies() {
-	_, err := exec.Command("/bin/sh", "/path/to/file.sh").Output()
+func RestartRunner() error {
+	err := StopRunner()
 	if err != nil {
-		fmt.Printf("error %s", err)
+		return err
 	}
+	err = StartRunner()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func InstallDependencies() error {
+	err := StopRunner()
+	if err != nil {
+		return err
+	}
+	log.Println("Started installing dependencies")
+	scriptPath := os.Getenv("SCRIPTS_PATH") + "/install-dependencies.sh"
+	_, err = exec.Command("/bin/sh", scriptPath).Output()
+	if err != nil {
+		return err
+	}
+	cmd = nil
+	err = StartRunner()
+	if err != nil {
+		return err
+	}
+	return nil
 }
