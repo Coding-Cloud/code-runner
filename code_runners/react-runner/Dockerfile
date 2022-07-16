@@ -12,6 +12,8 @@ RUN go mod download && go mod verify
 RUN go build -v -o /usr/local/bin/code-runner
 
 FROM nospy/pnpm:16
+COPY --from=build /usr/local/bin/code-runner /usr/local/bin/code-runner
+
 RUN pnpm config set store-dir=/root/.local/share/pnpm
 
 RUN mkdir /home/app
@@ -34,7 +36,7 @@ ENV RUNNER_PORT=8181
 
 EXPOSE 8181
 
-EXPOSE 443
+EXPOSE 3000
 VOLUME /home/app
 VOLUME /logs/$PROJECT_ID.log
 ENTRYPOINT ["code-runner"]

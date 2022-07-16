@@ -12,6 +12,7 @@ RUN go mod download && go mod verify
 RUN go build -v -o /usr/local/bin/code-runner
 
 FROM maven:3.8.5-eclipse-temurin-17-alpine
+COPY --from=build /usr/local/bin/code-runner /usr/local/bin/code-runner
 
 RUN mkdir /home/app
 

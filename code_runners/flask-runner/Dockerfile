@@ -12,6 +12,8 @@ RUN go mod download && go mod verify
 RUN go build -v -o /usr/local/bin/code-runner
 
 FROM python:3.9.13-slim
+COPY --from=build /usr/local/bin/code-runner /usr/local/bin/code-runner
+
 RUN pip install Flask --target=/libs
 
 RUN mkdir /home/app
