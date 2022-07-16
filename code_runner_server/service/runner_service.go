@@ -17,9 +17,11 @@ func StartRunner() {
 }
 
 func StopRunner() {
-	err := cmd.Process.Kill()
-	if err != nil {
-		log.Fatal(err)
+	if cmd != nil {
+		err := cmd.Process.Kill()
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
@@ -29,6 +31,7 @@ func RestartRunner() {
 }
 
 func InstallDependencies() {
+	StopRunner()
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/install-dependencies.sh"
 	_, err := exec.Command("/bin/sh", scriptPath).Output()
 	if err != nil {
