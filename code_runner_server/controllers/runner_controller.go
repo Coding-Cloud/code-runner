@@ -18,6 +18,7 @@ func startProject(c *gin.Context) {
 func restartProject(c *gin.Context) {
 	err := service.RestartRunner()
 	if err != nil {
+		c.Writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	c.Writer.WriteHeader(http.StatusOK)
@@ -26,6 +27,7 @@ func restartProject(c *gin.Context) {
 func stopProject(c *gin.Context) {
 	err := service.StopRunner()
 	if err != nil {
+		c.Writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	c.Writer.WriteHeader(http.StatusOK)
