@@ -2,28 +2,36 @@ package service
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 )
 
-func startProject() {
+var cmd *exec.Cmd
+
+func startRunner() {
 	fmt.Println("FOO:", os.Getenv("SCRIPTS_PATH"))
-	_, err := exec.Command("/bin/sh", "/path/to/file.sh").Output()
-	if err != nil {
-		fmt.Printf("error %s", err)
+	cmd := exec.Command("/bin/sh", "/path/to/file.sh")
+	if err := cmd.Start(); err != nil {
+		log.Fatal(err)
 	}
 }
 
-func stopProject() {
-	_, err := exec.Command("/bin/sh", "/path/to/file.sh").Output()
+func stopRunner() {
+	err := cmd.Process.Kill()
 	if err != nil {
-		fmt.Printf("error %s", err)
+		log.Fatal(err)
 	}
+}
+
+func restartRunner() {
+	stopRunner()
+	startRunner()
 }
 
 func installDependencies() {
 	_, err := exec.Command("/bin/sh", "/path/to/file.sh").Output()
 	if err != nil {
-		fmt.Printf("error %s", err)
+		log.Fatal(err)
 	}
 }
