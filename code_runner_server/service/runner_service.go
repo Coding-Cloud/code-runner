@@ -10,7 +10,7 @@ import (
 var cmd *exec.Cmd
 
 func StartRunner() error {
-	if cmd == nil {
+	if cmd != nil {
 		log.Print("Already running")
 		return errors.New("runner already running")
 	}
