@@ -18,8 +18,8 @@ RUN pnpm install -g @nestjs/cli
 RUN mkdir /home/app
 WORKDIR /home/app
 
-COPY ./start.sh /home/start.sh
-COPY ./install-dependencies.sh /home/install-dependencies.sh
+COPY ./code_runners/nest-runner/start.sh /home/start.sh
+COPY ./code_runners/nest-runner/install-dependencies.sh /home/install-dependencies.sh
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
