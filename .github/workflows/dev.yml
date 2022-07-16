@@ -29,7 +29,8 @@ jobs:
       - name: Build and push Angular code runner
         uses: docker/build-push-action@v2
         with:
-          context: ./code_runners/angular-runner
+          file: ./code_runners/angular-runner/Dockerfile
+          context: .
           push: true
           tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:angular-dev
   react:
@@ -54,7 +55,8 @@ jobs:
       - name: Build and push React code runner
         uses: docker/build-push-action@v2
         with:
-          context: ./code_runners/react-runner
+          file: ./code_runners/react-runner/Dockerfile
+          context: .
           push: true
           tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:react-dev
           
@@ -80,7 +82,8 @@ jobs:
       - name: Build and push Quarkus code runner
         uses: docker/build-push-action@v2
         with:
-          context: ./code_runners/quarkus-runner
+          file: ./code_runners/quarkus-runner/Dockerfile
+          context: .
           push: true
           tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:quarkus-dev
 
@@ -106,7 +109,8 @@ jobs:
       - name: Build and push Nest code runner
         uses: docker/build-push-action@v2
         with:
-          context: ./code_runners/nest-runner
+          file: ./code_runners/nest-runner/Dockerfile
+          context: .
           push: true
           tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:nestjs-dev
 
@@ -132,6 +136,7 @@ jobs:
       - name: Build and push Flask code runner
         uses: docker/build-push-action@v2
         with:
-          context: ./code_runners/flask-runner
+          file: ./code_runners/flask-runner/Dockerfile
+          context: .
           push: true
           tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:flask-dev
