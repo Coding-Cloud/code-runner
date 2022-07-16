@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	err := service.StartRunner()
+	err := service.InstallDependencies()
 	if err != nil {
 		log.Fatal("unable to start runner on launch", err)
 	}
