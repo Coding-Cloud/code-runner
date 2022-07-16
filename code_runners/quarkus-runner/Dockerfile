@@ -4,12 +4,15 @@ RUN mkdir /home/app
 
 WORKDIR /home/app
 
-COPY ./quarkus-starter.sh /home/quarkus-starter.sh
-RUN chmod +x /home/quarkus-starter.sh
+COPY ./start.sh /home/start.sh
+COPY ./install-dependencies.sh /home/install-dependencies.sh
+RUN chmod +x /home/start.sh
+RUN chmod +x /home/install-dependencies.sh
 
 ENV PROJECT_ID=""
 ENV PUBLIC_URL=http://localhost:8080
 ENV PORT=8080
+ENV SCRIPTS_PATH=/home
 
 EXPOSE 8080
 VOLUME /home/app
