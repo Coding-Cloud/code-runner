@@ -27,7 +27,7 @@ RUN chmod +x /home/install-dependencies.sh
 
 ENV HOST=0.0.0.0
 ENV PUBLIC_URL="localhost"
-ENV PROJECT_ID=""
+ENV PROJECT_ID="project_id"
 ENV PORT=4200
 
 ENV SCRIPTS_PATH=/home
@@ -37,6 +37,6 @@ EXPOSE 8080
 
 EXPOSE 4200
 VOLUME /home/app
-VOLUME /logs/$PROJECT_ID.log
+VOLUME /logs
 VOLUME /root/.local/share/pnpm
 ENTRYPOINT ["code-runner"]

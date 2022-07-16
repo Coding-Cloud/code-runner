@@ -11,14 +11,11 @@ var cmd *exec.Cmd
 
 func StartRunner() error {
 	if cmd != nil {
-		log.Print("Already running")
-		return errors.New("runner already running")
+		return errors.New("action already running")
 	}
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/start.sh"
-	log.Print("Starting ")
 	cmd = exec.Command("/bin/sh", scriptPath)
 	if err := cmd.Start(); err != nil {
-		log.Print(err)
 		return err
 	}
 	return nil
@@ -56,7 +53,6 @@ func InstallDependencies() error {
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/install-dependencies.sh"
 	_, err = exec.Command("/bin/sh", scriptPath).Output()
 	if err != nil {
-		log.Print(err)
 		return err
 	}
 	err = StartRunner()
