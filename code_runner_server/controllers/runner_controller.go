@@ -9,7 +9,7 @@ import (
 func startProject(c *gin.Context) {
 	err := service.StartRunner()
 	if err != nil {
-		c.Writer.WriteHeader(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 	c.Writer.WriteHeader(http.StatusOK)
@@ -18,7 +18,7 @@ func startProject(c *gin.Context) {
 func restartProject(c *gin.Context) {
 	err := service.RestartRunner()
 	if err != nil {
-		c.Writer.WriteHeader(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 	c.Writer.WriteHeader(http.StatusOK)
@@ -27,7 +27,7 @@ func restartProject(c *gin.Context) {
 func stopProject(c *gin.Context) {
 	err := service.StopRunner()
 	if err != nil {
-		c.Writer.WriteHeader(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 	c.Writer.WriteHeader(http.StatusOK)
@@ -36,7 +36,7 @@ func stopProject(c *gin.Context) {
 func installDependencies(c *gin.Context) {
 	err := service.InstallDependencies()
 	if err != nil {
-		c.Writer.WriteHeader(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 	c.Writer.WriteHeader(http.StatusOK)

@@ -13,12 +13,12 @@ func StartServer() {
 	controllers.SourceControllers(engine)
 	err := service.StartRunner()
 	if err != nil {
-		log.Fatal("unable to start runner on launch")
+		log.Fatal("unable to start runner on launch", err)
 	}
 	defer func() {
 		err := service.StopRunner()
 		if err != nil {
-			log.Fatal("unable to stop runner")
+			log.Fatal("unable to stop runner", err)
 		}
 	}()
 
