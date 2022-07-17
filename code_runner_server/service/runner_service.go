@@ -5,38 +5,34 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"syscall"
 )
 
-var cmd *exec.Cmd
-var pgid syscall.Getpgid(cmd.Process.Pid)
+var isRunning bool
 
 func StartRunner() error {
-	if cmd != nil {
+	if isRunning {
 		return errors.New("action already running")
 	}
 	log.Println("Starting runner")
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/start.sh"
-	cmd = exec.Command("/bin/sh", scriptPath)
+	cmd := exec.Command("/bin/sh", scriptPath)
 	if err := cmd.Start(); err != nil {
 		return err
 	}
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	pgid, _ = syscall.Getpgid(cmd.Process.Pid)
-
-
+	isRunning = true
 	return nil
 }
 
 func StopRunner() error {
-	if cmd != nil {
+	if isRunning {
 		log.Println("Stopping process")
-		syscall.Kill(-pgid, 15)
-		cmd = nil
-		if err != nil {
+		scriptPath := os.Getenv("SCRIPTS_PATH") + "/stop.sh"
+		cmd := exec.Command("/bin/sh", scriptPath)
+		if err := cmd.Start(); err != nil {
 			log.Print(err)
 			return err
 		}
+		isRunning = false
 	}
 	return nil
 }
@@ -54,20 +50,19 @@ func RestartRunner() error {
 }
 
 func InstallDependencies() error {
-	err := StopRunner()
-	if err != nil {
+	if err := StopRunner(); err != nil {
 		return err
 	}
 	log.Println("Started installing dependencies")
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/install-dependencies.sh"
-	_, err = exec.Command("/bin/sh", scriptPath).Output()
+	_, err := exec.Command("/bin/sh", scriptPath).Output()
 	log.Println("Finished installing dependencies")
 	if err != nil {
 		return err
 	}
-	cmd = nil
-	err = StartRunner()
-	if err != nil {
+	isRunning = false
+
+	if err := StartRunner(); err != nil {
 		return err
 	}
 	return nil

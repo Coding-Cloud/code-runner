@@ -21,6 +21,7 @@ RUN mkdir /home/app
 WORKDIR /home/app
 
 COPY ./code_runners/react-runner/start.sh /home/start.sh
+COPY ./code_runners/react-runner/stop.sh /home/stop.sh
 COPY ./code_runners/react-runner/install-dependencies.sh /home/install-dependencies.sh
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
