@@ -27,6 +27,7 @@ func StopRunner() error {
 	if cmd != nil {
 		log.Println("Stopping process")
 		err := cmd.Process.Signal(syscall.SIGKILL)
+		err = cmd.Process.Kill()
 		cmd = nil
 		if err != nil {
 			log.Print(err)
