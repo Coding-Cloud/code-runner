@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"syscall"
 )
 
 var cmd *exec.Cmd
@@ -17,6 +18,9 @@ func StartRunner() error {
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/start.sh"
 	cmd = exec.Command("/bin/sh", scriptPath)
 	if err := cmd.Start(); err != nil {
+		return err
+	}
+	if err := cmd.Process.Signal(syscall.SIGKILL); err != nil {
 		return err
 	}
 	return nil
@@ -55,6 +59,7 @@ func InstallDependencies() error {
 	log.Println("Started installing dependencies")
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/install-dependencies.sh"
 	_, err = exec.Command("/bin/sh", scriptPath).Output()
+	log.Println("Finished installing dependencies")
 	if err != nil {
 		return err
 	}
