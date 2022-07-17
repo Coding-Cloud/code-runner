@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"syscall"
 )
 
 var cmd *exec.Cmd
@@ -26,7 +25,7 @@ func StartRunner() error {
 func StopRunner() error {
 	if cmd != nil {
 		log.Println("Stopping process")
-		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		_, err := exec.Command("kill", "-9", string(rune(cmd.Process.Pid))).Output()
 		cmd = nil
 		if err != nil {
 			log.Print(err)
