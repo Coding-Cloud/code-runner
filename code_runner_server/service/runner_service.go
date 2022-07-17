@@ -28,7 +28,7 @@ func StopRunner() error {
 		log.Println("Stopping process")
 		scriptPath := os.Getenv("SCRIPTS_PATH") + "/stop.sh"
 		cmd := exec.Command("/bin/sh", scriptPath)
-		if err := cmd.Start(); err != nil {
+		if _, err := cmd.Output(); err != nil {
 			log.Print(err)
 			return err
 		}
