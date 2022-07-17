@@ -5,9 +5,11 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"syscall"
 )
 
 var cmd *exec.Cmd
+var pgid syscall.Getpgid(cmd.Process.Pid)
 
 func StartRunner() error {
 	if cmd != nil {
@@ -19,13 +21,17 @@ func StartRunner() error {
 	if err := cmd.Start(); err != nil {
 		return err
 	}
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	pgid, _ = syscall.Getpgid(cmd.Process.Pid)
+
+
 	return nil
 }
 
 func StopRunner() error {
 	if cmd != nil {
 		log.Println("Stopping process")
-		_, err := exec.Command("pkill", "-f", "ng").Output()
+		syscall.Kill(-pgid, 15)
 		cmd = nil
 		if err != nil {
 			log.Print(err)
@@ -59,6 +65,7 @@ func InstallDependencies() error {
 	if err != nil {
 		return err
 	}
+	cmd = nil
 	err = StartRunner()
 	if err != nil {
 		return err
