@@ -19,6 +19,7 @@ func StartRunner() error {
 	if err := cmd.Start(); err != nil {
 		return err
 	}
+	log.Println("Started runner")
 	isRunning = true
 	return nil
 }
@@ -30,8 +31,8 @@ func StopRunner() error {
 		cmd := exec.Command("/bin/sh", scriptPath)
 		if _, err := cmd.Output(); err != nil {
 			log.Print(err)
-			return err
 		}
+		log.Println("Stopped process")
 		isRunning = false
 	}
 	return nil
