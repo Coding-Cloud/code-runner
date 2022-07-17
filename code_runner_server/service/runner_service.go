@@ -26,8 +26,7 @@ func StartRunner() error {
 func StopRunner() error {
 	if cmd != nil {
 		log.Println("Stopping process")
-		err := cmd.Process.Signal(syscall.SIGKILL)
-		err = cmd.Process.Kill()
+		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
 		cmd = nil
 		if err != nil {
 			log.Print(err)
@@ -61,7 +60,6 @@ func InstallDependencies() error {
 	if err != nil {
 		return err
 	}
-	cmd = nil
 	err = StartRunner()
 	if err != nil {
 		return err
