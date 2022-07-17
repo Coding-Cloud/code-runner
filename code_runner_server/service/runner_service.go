@@ -25,7 +25,7 @@ func StartRunner() error {
 func StopRunner() error {
 	if cmd != nil {
 		log.Println("Stopping process")
-		_, err := exec.Command("kill", "-9", string(rune(cmd.Process.Pid))).Output()
+		_, err := exec.Command("pkill", "-f", "ng").Output()
 		cmd = nil
 		if err != nil {
 			log.Print(err)
