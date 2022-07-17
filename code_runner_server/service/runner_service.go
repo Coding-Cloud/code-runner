@@ -20,16 +20,13 @@ func StartRunner() error {
 	if err := cmd.Start(); err != nil {
 		return err
 	}
-	if err := cmd.Process.Signal(syscall.SIGKILL); err != nil {
-		return err
-	}
 	return nil
 }
 
 func StopRunner() error {
 	if cmd != nil {
 		log.Println("Stopping process")
-		err := cmd.Process.Kill()
+		err := cmd.Process.Signal(syscall.SIGKILL)
 		cmd = nil
 		if err != nil {
 			log.Print(err)
