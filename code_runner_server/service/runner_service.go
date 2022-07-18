@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"errors"
 	"log"
 	"os"
@@ -16,7 +17,11 @@ func StartRunner() error {
 	log.Println("Starting runner")
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/start.sh"
 	cmd := exec.Command("/bin/sh", scriptPath)
+	var outBytes, errBytes bytes.Buffer
+	cmd.Stdout = &outBytes
+	cmd.Stderr = &errBytes
 	if err := cmd.Start(); err != nil {
+		log.Println("stdout: ", outBytes.String(), "stderr: ", errBytes.String())
 		return err
 	}
 	log.Println("Started runner")
