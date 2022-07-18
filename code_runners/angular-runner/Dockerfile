@@ -28,7 +28,7 @@ RUN chmod +x /home/install-dependencies.sh
 
 ENV HOST=0.0.0.0
 ENV PUBLIC_URL="localhost"
-ENV PROJECT_ID=""
+ENV PROJECT_ID="project_id"
 ENV PORT=4200
 
 ENV GIN_MODE=release

@@ -26,7 +26,7 @@ COPY ./code_runners/nest-runner/install-dependencies.sh /home/install-dependenci
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
-ENV PROJECT_ID=""
+ENV PROJECT_ID="project_id"
 ENV GIN_MODE=release
 ENV SCRIPTS_PATH=/home
 ENV RUNNER_PORT=8181

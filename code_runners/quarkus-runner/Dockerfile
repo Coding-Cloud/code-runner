@@ -24,7 +24,7 @@ COPY ./code_runners/quarkus-runner/install-dependencies.sh /home/install-depende
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
-ENV PROJECT_ID=""
+ENV PROJECT_ID="project_id"
 ENV PUBLIC_URL=http://localhost:8080
 ENV PORT=8080
 
