@@ -9,7 +9,8 @@ import (
 
 func main() {
 	projectId := os.Getenv("PROJECT_ID")
-	log.Printf("Starting code runner for project: %s\n", projectId)
+	pubUrl := os.Getenv("PUBLIC_URL")
+	log.Printf("Starting code runner for project %s at %s\n", projectId, pubUrl)
 	err := service.InstallDependencies()
 	if err != nil {
 		log.Fatal("unable to start runner on launch", err)
