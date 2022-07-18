@@ -39,6 +39,6 @@ EXPOSE 8181
 
 EXPOSE 4200
 VOLUME /home/app
-VOLUME /logs
+VOLUME /logs/$PROJECT_ID.log
 VOLUME /root/.local/share/pnpm
 ENTRYPOINT ["code-runner"]
