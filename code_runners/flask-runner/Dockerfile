@@ -25,6 +25,7 @@ COPY ./code_runners/flask-runner/install-dependencies.sh /home/install-dependenc
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
+ENV PROJECT_ID=""
 ENV FLASK_APP main.py
 ENV FLASK_ENV development
 ENV PYTHONPATH /libs
