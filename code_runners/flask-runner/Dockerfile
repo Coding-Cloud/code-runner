@@ -25,7 +25,6 @@ COPY ./code_runners/flask-runner/install-dependencies.sh /home/install-dependenc
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
-ENV PROJECT_ID="project_id"
 ENV FLASK_APP main.py
 ENV FLASK_ENV development
 ENV PYTHONPATH /libs
@@ -40,6 +39,6 @@ EXPOSE 8181
 
 EXPOSE 5000
 VOLUME /home/app
-VOLUME /logs/$PROJECT_ID.log
+VOLUME /logs
 VOLUME /libs
 ENTRYPOINT ["code-runner"]

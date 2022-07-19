@@ -27,8 +27,6 @@ RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
 ENV HOST=0.0.0.0
-ENV PROJECT_ID="project_id"
-ENV PUBLIC_URL="localhost"
 ENV PORT=3000
 
 ENV GIN_MODE=release
@@ -39,5 +37,5 @@ EXPOSE 8181
 
 EXPOSE 3000
 VOLUME /home/app
-VOLUME /logs/$PROJECT_ID.log
+VOLUME /logs
 ENTRYPOINT ["code-runner"]

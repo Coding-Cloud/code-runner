@@ -26,7 +26,6 @@ COPY ./code_runners/nest-runner/install-dependencies.sh /home/install-dependenci
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
-ENV PROJECT_ID="project_id"
 ENV GIN_MODE=release
 ENV SCRIPTS_PATH=/home
 ENV RUNNER_PORT=8181
@@ -35,6 +34,6 @@ EXPOSE 8181
 
 EXPOSE 3000
 VOLUME /home/app
-VOLUME /logs/$PROJECT_ID.log
+VOLUME /logs
 VOLUME /root/.local/share/pnpm
 ENTRYPOINT ["code-runner"]

@@ -24,8 +24,6 @@ COPY ./code_runners/quarkus-runner/install-dependencies.sh /home/install-depende
 RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
-ENV PROJECT_ID="project_id"
-ENV PUBLIC_URL=http://localhost:8080
 ENV PORT=8080
 
 ENV GIN_MODE=release
@@ -36,6 +34,6 @@ EXPOSE 8181
 
 EXPOSE 8080
 VOLUME /home/app
-VOLUME /logs/$PROJECT_ID.log
+VOLUME /logs
 VOLUME /root/.m2
 ENTRYPOINT ["code-runner"]
