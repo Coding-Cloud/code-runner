@@ -14,7 +14,7 @@ func SourceWebsockets(server *socketio.Server) {
 		log.Println("connected:", s.ID())
 
 		go func() {
-			path := "/logs/" + os.Getenv("PROJECT_ID")
+			path := "/logs/" + os.Getenv("PROJECT_ID") + ".log"
 			f, err := os.Open(path)
 			if err != nil {
 				log.Fatal(err)
