@@ -1,18 +1,25 @@
 package main
 
 import (
-	"code-runner/code_runner_server/controllers"
-	"fmt"
-	"github.com/gin-gonic/gin"
+	"code-runner/code_runner_server"
+	"code-runner/code_runner_server/service"
+	"log"
+	"os"
 )
 
 func main() {
-	engine := gin.Default()
-
-	controllers.SourceControllers(engine)
-
-	err := engine.Run(":8080")
+	projectId := os.Getenv("PROJECT_ID")
+	pubUrl := os.Getenv("PUBLIC_URL")
+	log.Printf("Starting code runner for project %s at %s\n", projectId, pubUrl)
+	err := service.InstallDependencies()
 	if err != nil {
-		fmt.Printf("error %s", err)
+		log.Fatal("unable to start runner on launch", err)
 	}
+	defer func() {
+		err := service.StopRunner()
+		if err != nil {
+			log.Fatal("unable to stop runner", err)
+		}
+	}()
+	code_runner_server.StartServer()
 }

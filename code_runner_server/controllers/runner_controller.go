@@ -1,21 +1,38 @@
 package controllers
 
-import "github.com/gin-gonic/gin"
+import (
+	"code-runner/code_runner_server/service"
+	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+)
 
 func startProject(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "pong",
-	})
+	err := service.StartRunner()
+	if err != nil {
+		log.Print(err)
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+	c.Writer.WriteHeader(http.StatusOK)
 }
 
-func stopProject(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Hello World!",
-	})
+func restartProject(c *gin.Context) {
+	err := service.RestartRunner()
+	if err != nil {
+		log.Print(err)
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+	c.Writer.WriteHeader(http.StatusOK)
 }
 
 func installDependencies(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Hello World!",
-	})
+	go func() {
+		err := service.InstallDependencies()
+		if err != nil {
+			log.Print(err)
+		}
+	}()
+	c.Writer.WriteHeader(http.StatusOK)
 }

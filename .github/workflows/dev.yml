@@ -1,0 +1,142 @@
+name: Dev infra CI
+
+on:
+  push:
+    branches:
+      - 'dev'
+
+jobs:
+  angular:
+    name: Build angular docker image and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Cloud Coding Registry
+        uses: docker/login-action@v1
+        with:
+          registry: rg.fr-par.scw.cloud/cloudcoding
+          username: nologin
+          password: ${{ secrets.REGISTRY_TOKEN }}
+
+      - name: Build and push Angular code runner
+        uses: docker/build-push-action@v2
+        with:
+          file: ./code_runners/angular-runner/Dockerfile
+          context: .
+          push: true
+          tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:angular-dev
+  react:
+    name: Build react docker image and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Cloud Coding Registry
+        uses: docker/login-action@v1
+        with:
+          registry: rg.fr-par.scw.cloud/cloudcoding
+          username: nologin
+          password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: Build and push React code runner
+        uses: docker/build-push-action@v2
+        with:
+          file: ./code_runners/react-runner/Dockerfile
+          context: .
+          push: true
+          tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:react-dev
+          
+  quarkus:
+    name: Build quarkus docker image and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Cloud Coding Registry
+        uses: docker/login-action@v1
+        with:
+          registry: rg.fr-par.scw.cloud/cloudcoding
+          username: nologin
+          password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: Build and push Quarkus code runner
+        uses: docker/build-push-action@v2
+        with:
+          file: ./code_runners/quarkus-runner/Dockerfile
+          context: .
+          push: true
+          tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:quarkus-dev
+
+  nest:
+    name: Build Nest docker image and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Cloud Coding Registry
+        uses: docker/login-action@v1
+        with:
+          registry: rg.fr-par.scw.cloud/cloudcoding
+          username: nologin
+          password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: Build and push Nest code runner
+        uses: docker/build-push-action@v2
+        with:
+          file: ./code_runners/nest-runner/Dockerfile
+          context: .
+          push: true
+          tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:nestjs-dev
+
+  flask:
+    name: Build Flask docker image and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Cloud Coding Registry
+        uses: docker/login-action@v1
+        with:
+          registry: rg.fr-par.scw.cloud/cloudcoding
+          username: nologin
+          password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: Build and push Flask code runner
+        uses: docker/build-push-action@v2
+        with:
+          file: ./code_runners/flask-runner/Dockerfile
+          context: .
+          push: true
+          tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:flask-dev
