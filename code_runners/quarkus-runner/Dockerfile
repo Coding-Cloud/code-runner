@@ -11,8 +11,9 @@ RUN go mod download && go mod verify
 
 RUN go build -v -o /usr/local/bin/code-runner
 
-FROM maven:3.8.5-eclipse-temurin-17-alpine
+FROM maven:3.8.6-amazoncorretto-17
 COPY --from=build /usr/local/bin/code-runner /usr/local/bin/code-runner
+RUN yum install -y procps
 
 RUN mkdir /home/app
 
