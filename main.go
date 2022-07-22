@@ -12,10 +12,12 @@ func main() {
 	pubUrl := os.Getenv("PUBLIC_URL")
 	log.Printf("Starting code runner for project %s at %s\n", projectId, pubUrl)
 	service.ClearLogs()
-	err := service.InstallDependencies()
-	if err != nil {
-		log.Fatal("unable to start runner on launch", err)
-	}
+	go func() {
+		err := service.InstallDependencies()
+		if err != nil {
+			log.Fatal("unable to start runner on launch", err)
+		}
+	}()
 	defer func() {
 		err := service.StopRunner()
 		if err != nil {
