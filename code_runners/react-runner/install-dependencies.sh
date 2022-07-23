@@ -1,2 +1,2 @@
 #!/bin/sh
-pnpm install 2>&1 | tee "/logs/${PROJECT_ID}.log"
+pnpm install 2>&1 | tee -a "/logs/${PROJECT_ID}.log"

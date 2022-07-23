@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"log"
+	"os"
 )
 
 func WatchLogs(path string, callback func()) {
@@ -43,4 +44,11 @@ func WatchLogs(path string, callback func()) {
 	}
 	log.Println("Started watching file")
 	<-done
+}
+
+func ClearLogs() {
+	path := "/logs/" + os.Getenv("PROJECT_ID") + ".log"
+	if err := os.Remove(path); err != nil {
+		return
+	}
 }

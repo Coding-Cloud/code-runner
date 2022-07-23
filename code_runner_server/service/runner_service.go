@@ -59,6 +59,7 @@ func InstallDependencies() error {
 	if err := StopRunner(); err != nil {
 		return err
 	}
+	isRunning = true
 	log.Println("Started installing dependencies")
 	scriptPath := os.Getenv("SCRIPTS_PATH") + "/install-dependencies.sh"
 	_, err := exec.Command("/bin/sh", scriptPath).Output()

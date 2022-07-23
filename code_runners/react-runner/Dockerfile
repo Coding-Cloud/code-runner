@@ -27,7 +27,6 @@ RUN chmod +x /home/start.sh
 RUN chmod +x /home/install-dependencies.sh
 
 ENV HOST=0.0.0.0
-ENV PORT=3000
 
 ENV GIN_MODE=release
 ENV SCRIPTS_PATH=/home
