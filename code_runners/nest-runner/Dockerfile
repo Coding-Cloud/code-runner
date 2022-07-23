@@ -14,6 +14,7 @@ RUN go build -v -o /usr/local/bin/code-runner
 FROM nospy/pnpm:16
 COPY --from=build /usr/local/bin/code-runner /usr/local/bin/code-runner
 
+RUN pnpm config set auto-install-peers=true
 RUN pnpm config set store-dir=/root/.local/share/pnpm
 RUN pnpm install -g @nestjs/cli
 
