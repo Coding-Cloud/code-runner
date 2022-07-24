@@ -11,12 +11,10 @@ RUN go mod download && go mod verify
 
 RUN go build -v -o /usr/local/bin/code-runner
 
-FROM nospy/pnpm:16
+FROM node:16.15.0
 COPY --from=build /usr/local/bin/code-runner /usr/local/bin/code-runner
 
-RUN pnpm config set auto-install-peers=true
-RUN pnpm config set store-dir=/root/.local/share/pnpm
-RUN pnpm install -g @angular/cli
+RUN npm install -g @angular/cli
 
 RUN mkdir /home/app
 WORKDIR /home/app
