@@ -17,6 +17,7 @@ COPY --from=build /usr/local/bin/code-runner /usr/local/bin/code-runner
 RUN pnpm config set auto-install-peers=true
 RUN pnpm config set store-dir=/root/.local/share/pnpm
 RUN pnpm install -g @nestjs/cli
+RUN pnpm install -g env-cmd
 
 RUN mkdir /home/app
 WORKDIR /home/app
