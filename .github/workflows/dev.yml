@@ -33,6 +33,33 @@ jobs:
           context: .
           push: true
           tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:angular-dev
+  cloud-coding:
+    name: Build cloud coding docker image and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Cloud Coding Registry
+        uses: docker/login-action@v1
+        with:
+          registry: rg.fr-par.scw.cloud/cloudcoding
+          username: nologin
+          password: ${{ secrets.REGISTRY_TOKEN }}
+
+      - name: Build and push Cloud Coding code runner
+        uses: docker/build-push-action@v2
+        with:
+          file: ./code_runners/cloud-coding-runner/Dockerfile
+          context: .
+          push: true
+          tags: rg.fr-par.scw.cloud/cloudcoding/code-runner:cc-dev
   react:
     name: Build react docker image and push
     runs-on: ubuntu-latest
